@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,7 @@ public class RegActivity extends AppCompatActivity{
     private Button button_register;
     private TextView backTosign;
     private static final String TAG = "EmailPassword";
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,15 @@ public class RegActivity extends AppCompatActivity{
         backTosign = (TextView) findViewById(R.id.appCompatTextViewLoginLink);
         mAuth = FirebaseAuth.getInstance();
 
+        // Share preference to save the login mode info
+        sp = getSharedPreferences("login",MODE_PRIVATE);
+
+        if(sp.getBoolean("logged",false)){
+            Intent intent2 = new Intent(RegActivity.this, MainActivity.class);
+            intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent2);
+            finish();
+        }
 
         button_register.setOnClickListener(new View.OnClickListener() {
             // Click the Register button to register user
@@ -101,6 +112,7 @@ public class RegActivity extends AppCompatActivity{
                                 Intent intent2 = new Intent(RegActivity.this, MainActivity.class);
                                 intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent2);
+                                sp.edit().putBoolean("logged",true).apply();
                                 finish();
 //                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             }else{

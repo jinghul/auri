@@ -31,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextView button_register;
     private Button button_login;
 
+    private SharedPreferences sp;
+
     SharedPreferences getPrefs;
     boolean isFirstStart;
 
@@ -50,6 +52,15 @@ public class LoginActivity extends AppCompatActivity {
         button_register = (TextView) findViewById(R.id.textViewLinkRegister);
         mAuth = FirebaseAuth.getInstance();
 
+        // Share preference to save the login mode info
+        sp = getSharedPreferences("login",MODE_PRIVATE);
+
+        if(sp.getBoolean("logged",false)){
+            Intent intent2 = new Intent(LoginActivity.this, MainActivity.class);
+            intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent2);
+            finish();
+        }
 
         // Perform Log In
         button_login.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent2 = new Intent(LoginActivity.this, MainActivity.class);
                             intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent2);
+                            sp.edit().putBoolean("logged",true).apply();
                             finish();
 //                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         }else {
