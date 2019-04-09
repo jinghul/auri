@@ -1,5 +1,7 @@
-# auri
-A restaurant finding mobile application using augmented reality and your camera.
+# Auri (Augmented Reality Restaurant Interface)
+
+An augmented reality restaurant finding mobile application using ARCore and Google Places.
+Find and see information about restaurants on the street right through your camera.
 
 Run Instructions:
 1. Make sure your Android Device supports ARCore - see them here: https://developers.google.com/ar/discover/supported-devices
@@ -8,3 +10,5 @@ Run Instructions:
 4. Use Android Studio to open the project, gradlew clean the project, and then rebuild.
 
 If "google-services.json" file is not within the app folder, please download it from https://drive.google.com/a/bu.edu/file/d/1ntzrXr2vPtTa0_Bv5Qn_Tdz0COUyp_qu/view?usp=sharing.
+
+
